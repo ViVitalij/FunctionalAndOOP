@@ -78,7 +78,9 @@ public class Application {
 
         System.out.println();
 
-        employeeList.sort((e1, e2) -> e1.getSalary() > e2.getSalary() ? 1 : -1);    //comparator
+        employeeList.sort((e1, e2) ->                           //comparator
+                e1.getSalary() > e2.getSalary() ? 1 :
+                        e1.getSalary()==e2.getSalary() ? 0 : -1);
         employeeList.forEach(e -> System.out.println(e.getFirstName() + ": " + e.getSalary()));
 
         System.out.println();
