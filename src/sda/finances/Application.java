@@ -3,10 +3,7 @@ package sda.finances;
 import sda.finances.model.Expense;
 import sda.finances.model.Product;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by m.losK on 2017-02-20.
@@ -38,6 +35,19 @@ public class Application {
                         .filter(product -> product.getName().equals("banana"))
                         .forEach(product -> System.out.println(product)));
 
+        System.out.println();
+
+        List<Double> sum = new ArrayList<>();
+        expenses.forEach(expense -> {
+            expense.getProducts()
+                    .forEach(product -> sum.add(product.getUnitPrice() * product.getAmount()));
+        });
+
+        double total = 0;
+        for (Double e : sum) {
+            total += e;
+        }
+        System.out.println(total);
     }
 
     private static List<Expense> init() {
