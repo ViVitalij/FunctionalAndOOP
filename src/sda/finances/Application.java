@@ -12,6 +12,8 @@ public class Application {
     public static void main(String[] args) {
         List<Expense> expenses = init();
 
+
+        //1. display all the goods whose unit price is less than 3
         expenses.forEach(expense -> {
             expense.getProducts().stream()
                     .filter(product -> product.getUnitPrice() < 3)
@@ -20,6 +22,7 @@ public class Application {
 
         System.out.println();
 
+        //2. show only grocery products whose unit price is less than 3
         expenses.stream()
                 .filter(e -> e.getType().equals("groceries"))
                 .forEach(expense -> {
@@ -30,6 +33,7 @@ public class Application {
 
         System.out.println();
 
+        //3. show only bananas orders
         expenses.forEach(expense ->
                 expense.getProducts().stream()
                         .filter(product -> product.getName().equals("banana"))
@@ -37,17 +41,17 @@ public class Application {
 
         System.out.println();
 
-        List<Double> sum = new ArrayList<>();
-        expenses.forEach(expense -> {
-            expense.getProducts()
-                    .forEach(product -> sum.add(product.getUnitPrice() * product.getAmount()));
-        });
 
-        double total = 0;
-        for (Double e : sum) {
-            total += e;
-        }
-        System.out.println(total);
+        //4. show total price of all foodstuffs
+        List<Double> productsPrice = new ArrayList<>();
+        expenses.stream()
+                .filter(expense -> expense.getType().equals("groceries"))
+                .forEach(groceries -> {
+                    groceries.getProducts().stream()
+                            .forEach(product -> productsPrice.add(product.getUnitPrice() * product.getAmount()));
+                });
+        double totalPrice = productsPrice.stream().mapToDouble(d -> d).sum();
+        System.out.println("Total price is: " + totalPrice);
     }
 
     private static List<Expense> init() {
@@ -59,16 +63,16 @@ public class Application {
         Expense expense = new Expense("groceries", products);
 
         List<Product> products2 = new ArrayList<>();
-        products2.add(new Product("farba", 1, 25));
-        products2.add(new Product("mlotek", 2, 10));
-        products2.add(new Product("gwozdzie", 3, 15));
-        Expense expense2 = new Expense("budowlane", products2, 2017, 2, 19);
+        products2.add(new Product("paint", 1, 25));
+        products2.add(new Product("hammer", 2, 10));
+        products2.add(new Product("nails", 3, 15));
+        Expense expense2 = new Expense("building materials", products2, 2017, 2, 19);
 
         List<Product> products3 = new ArrayList<>();
-        products3.add(new Product("witamina C", 2, 3));
-        products3.add(new Product("apap", 2, 4));
-        products3.add(new Product("syrop na kasze", 3, 1));
-        Expense expense3 = new Expense("lekarstwa", products3, 2017, 2, 18);
+        products3.add(new Product("vitamin C", 2, 3));
+        products3.add(new Product("painkiller", 2, 4));
+        products3.add(new Product("cough syrup", 3, 1));
+        Expense expense3 = new Expense("medicine", products3, 2017, 2, 18);
 
         List<Product> products4 = new ArrayList<>();
         products4.add(new Product("banana", 2, 1.5));
