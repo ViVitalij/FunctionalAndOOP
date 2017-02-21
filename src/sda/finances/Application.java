@@ -11,8 +11,7 @@ import java.util.*;
 public class Application {
     public static void main(String[] args) {
         List<Expense> expenses = init();
-
-
+        
         //1. display all the goods whose unit price is less than 3
         expenses.forEach(expense -> {
             expense.getProducts().stream()
@@ -41,16 +40,10 @@ public class Application {
 
         System.out.println();
 
-
         //4. show total price of all foodstuffs
-        List<Double> productsPrice = new ArrayList<>();
-        expenses.stream()
+        double totalPrice = expenses.stream()
                 .filter(expense -> expense.getType().equals("groceries"))
-                .forEach(groceries -> {
-                    groceries.getProducts().stream()
-                            .forEach(product -> productsPrice.add(product.getUnitPrice() * product.getAmount()));
-                });
-        double totalPrice = productsPrice.stream().mapToDouble(d -> d).sum();
+                .mapToDouble(groceries -> groceries.getPrice()).sum();
         System.out.println("Total price is: " + totalPrice);
     }
 
